@@ -176,6 +176,8 @@ def main():
     CAT_COLORS = get_cat_colors(custom)
     EXPENSE_CATEGORIES = get_all_expense_categories(custom)
     INCOME_CATEGORIES  = get_all_income_categories(custom)
+    
+    BULAN_INDO = {1:"Januari", 2:"Februari", 3:"Maret", 4:"April", 5:"Mei", 6:"Juni", 7:"Juli", 8:"Agustus", 9:"September", 10:"Oktober", 11:"November", 12:"Desember"}
 
     # ── Sidebar navigation ──
     with st.sidebar:
@@ -193,8 +195,7 @@ def main():
         sel_year  = st.selectbox("Tahun", list(range(now.year - 2, now.year + 1))[::-1], index=0)
         sel_month = st.selectbox("Bulan", list(range(1, 13)),
                                  index=now.month - 1,
-                                 format_func=lambda m: calendar.month_name[m])
-
+                                 format_func=lambda m: BULAN_INDO[m]
         st.markdown("---")
         if st.button("🚪 Keluar", use_container_width=True):
             st.session_state.authenticated = False
@@ -321,7 +322,7 @@ def main():
             t_month = get_month_txs(txs, y_idx, m_idx)
             inc     = sum(t["amount"] for t in t_month if t["type"] == "income") + salaries.get(k, 0)
             exp     = sum(t["amount"] for t in t_month if t["type"] == "expense")
-            lab_6.append(f"{calendar.month_abbr[m_idx]} {y_idx}")
+            lab_6.append(f"{BULAN_INDO[m_idx][:3]} {y_idx}")
             inc_6.append(inc); exp_6.append(exp)
 
         fig3 = go.Figure()
@@ -383,7 +384,7 @@ def main():
 
         if submitted:
             new_tx = {
-                "id":       int(datetime.now().timestamp() * 1000),
+                "id":       "id": int((datetime.now().timestamp() + 25200) * 1000),
                 "type":     "expense" if tx_type == "Pengeluaran" else "income",
                 "amount":   int(tx_amount),
                 "category": tx_cat,
