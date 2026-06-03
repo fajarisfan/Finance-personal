@@ -537,13 +537,22 @@ def main():
         st.markdown("## 🏷️ Kelola Kategori")
         st.caption("Kategori bawaan tidak bisa dihapus. Kamu bisa tambah atau hapus kategori custom di sini.")
 
-        custom = load_custom_categories()  # reload fresh
+        # Selalu load fresh dari file di sini
+        custom = load_custom_categories()
         CAT_COLORS_fresh = get_cat_colors(custom)
 
-        tab_exp, tab_inc = st.tabs(["💸 Pengeluaran", "💵 Pemasukan"])
+        # Pakai selectbox bukan st.tabs — st.tabs + st.form ada known bug di Streamlit
+        # di mana form di tab non-aktif tidak ter-submit dengan benar
+        jenis_kat = st.radio(
+            "Pilih jenis kategori",
+            ["💸 Pengeluaran", "💵 Pemasukan"],
+            horizontal=True,
+            label_visibility="collapsed",
+        )
 
-        # ── Tab Pengeluaran ──
-        with tab_exp:
+        st.markdown("---")
+
+        if jenis_kat == "💸 Pengeluaran":
             st.markdown("**Kategori bawaan**")
             cols = st.columns(3)
             for i, cat in enumerate(DEFAULT_EXPENSE_CATEGORIES):
@@ -594,8 +603,7 @@ def main():
                         st.success(f"Kategori '{new_cat_exp}' ditambahkan!")
                         st.rerun()
 
-        # ── Tab Pemasukan ──
-        with tab_inc:
+        else:  # Pemasukan
             st.markdown("**Kategori bawaan**")
             cols = st.columns(3)
             for i, cat in enumerate(DEFAULT_INCOME_CATEGORIES):
@@ -632,7 +640,7 @@ def main():
 
             st.markdown("---")
             with st.form("add_inc_cat_form", clear_on_submit=True):
-                new_cat_inc = st.text_input("Nama kategori baru", placeholder="Contoh: Dividen, Sewa, ...")
+                new_cat_inc = st.text_input("Nama kategori baru", placeholder="Contoh: Dividen, Sewa, Tabungan ...")
                 if st.form_submit_button("➕ Tambah Kategori Pemasukan"):
                     new_cat_inc = new_cat_inc.strip()
                     all_inc = get_all_income_categories(custom)
