@@ -18,16 +18,6 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Deploy ke Streamlit Cloud
-
-1. Push repo ke GitHub
-2. Buka [share.streamlit.io](https://share.streamlit.io)
-3. Pilih repo → `app.py`
-4. Di **Secrets**, tambahkan:
-   ```toml
-   PIN = "pin_kamu_disini"
-   ```
-5. Deploy!
 
 > ⚠️ **Penting:** Jangan push `secrets.toml` ke GitHub (sudah ada di `.gitignore`).  
 > Data transaksi tersimpan di folder `data/` — di Streamlit Cloud akan reset kalau app di-restart.  
