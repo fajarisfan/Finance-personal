@@ -357,20 +357,28 @@ def main():
     elif page == "➕ Catat Transaksi":
         st.markdown("## ➕ Catat Transaksi")
 
+        # Load custom fresh supaya kategori baru langsung muncul
+        custom_fresh   = load_custom_categories()
+        exp_cats_fresh = get_all_expense_categories(custom_fresh)
+        inc_cats_fresh = get_all_income_categories(custom_fresh)
+
+        # tx_type di luar form agar selectbox Kategori bisa update dinamis.
+        # Di dalam st.form nilai widget lain tidak terbaca sebelum submit,
+        # akibatnya cats selalu fallback ke EXPENSE_CATEGORIES.
+        tx_type = st.selectbox("Jenis Transaksi", ["Pengeluaran", "Pemasukan"])
+        cats    = exp_cats_fresh if tx_type == "Pengeluaran" else inc_cats_fresh
+
         with st.form("add_tx_form", clear_on_submit=True):
             col1, col2 = st.columns(2)
             with col1:
-                tx_type   = st.selectbox("Jenis", ["Pengeluaran", "Pemasukan"])
                 tx_amount = st.number_input("Jumlah (Rp)", min_value=1, step=1000, format="%d")
+                tx_date   = st.date_input("Tanggal", value=date.today())
             with col2:
-                cats   = EXPENSE_CATEGORIES if tx_type == "Pengeluaran" else INCOME_CATEGORIES
-                tx_cat = st.selectbox("Kategori", cats)
-                tx_date= st.date_input("Tanggal", value=date.today())
-
-            tx_desc   = st.text_input(
-                "Keterangan",
-                placeholder="Contoh: Belanja Shopee — baju, Makan siang warteg, dll..."
-            )
+                tx_cat  = st.selectbox("Kategori", cats)
+                tx_desc = st.text_input(
+                    "Keterangan",
+                    placeholder="Contoh: Makan siang warteg, Gaji Mei, ..."
+                )
             submitted = st.form_submit_button("✅ Simpan Transaksi", use_container_width=True)
 
         if submitted:
