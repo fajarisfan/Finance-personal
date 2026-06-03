@@ -195,7 +195,7 @@ def main():
         sel_year  = st.selectbox("Tahun", list(range(now.year - 2, now.year + 1))[::-1], index=0)
         sel_month = st.selectbox("Bulan", list(range(1, 13)),
                                  index=now.month - 1,
-                                 format_func=lambda m: BULAN_INDO[m]
+                                 format_func=lambda m: BULAN_INDO[m])
         st.markdown("---")
         if st.button("🚪 Keluar", use_container_width=True):
             st.session_state.authenticated = False
@@ -215,7 +215,7 @@ def main():
     # PAGE: REKAP
     # ═══════════════════════════════════════════════════
     if page == "📊 Rekap Bulan Ini":
-        st.markdown(f"## 📊 Rekap — {calendar.month_name[sel_month]} {sel_year}")
+        st.markdown(f"## 📊 Rekap — {BULAN_INDO[sel_month]} {sel_year}")
 
         with st.expander("💼 Set Gaji Bulan Ini", expanded=(salary_val == 0)):
             new_salary = st.number_input(
@@ -384,7 +384,7 @@ def main():
 
         if submitted:
             new_tx = {
-                "id":       "id": int((datetime.now().timestamp() + 25200) * 1000),
+                "id":       int((datetime.now().timestamp() + 25200) * 1000),
                 "type":     "expense" if tx_type == "Pengeluaran" else "income",
                 "amount":   int(tx_amount),
                 "category": tx_cat,
@@ -397,7 +397,7 @@ def main():
             st.balloons()
 
         st.markdown("---")
-        st.markdown(f"#### Ringkasan {calendar.month_name[sel_month]} {sel_year}")
+        st.markdown(f"#### Ringkasan {BULAN_INDO[sel_month]} {sel_year}")
         c1, c2, c3 = st.columns(3)
         c1.metric("Pemasukan",  fmt_rp(total_income))
         c2.metric("Pengeluaran",fmt_rp(total_expense))
@@ -407,7 +407,7 @@ def main():
     # PAGE: RIWAYAT
     # ═══════════════════════════════════════════════════
     elif page == "📋 Riwayat":
-        st.markdown(f"## 📋 Riwayat — {calendar.month_name[sel_month]} {sel_year}")
+        st.markdown(f"## 📋 Riwayat — {BULAN_INDO[sel_month]} {sel_year}")
 
         if not month_txs:
             st.info("Belum ada transaksi bulan ini.")
