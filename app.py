@@ -29,7 +29,7 @@ INCOME_CATEGORIES = [
     "Transfer Masuk", "Lainnya"
 ]
 
-CAT_COLORS = {
+CAT_COLORS = [
     "Makanan & Minuman": "
 #E24B4A",
     "Belanja Online":    "
