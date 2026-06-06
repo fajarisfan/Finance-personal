@@ -17,6 +17,188 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ─── DESIGN SYSTEM (DESIGN.md tokens) ────────────────────────────────────────
+st.markdown("""
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  /* ── Base typography ── */
+  html, body, [class*="css"] {
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 16px;
+    color: #1A202C;
+    background: #F7FAFC;
+  }
+
+  /* ── App background ── */
+  .stApp { background: #F7FAFC !important; }
+
+  /* ── Sidebar — Deep Navy ── */
+  [data-testid="stSidebar"] {
+    background: #1A365D !important;
+  }
+  [data-testid="stSidebar"] * { color: #EBF8FF !important; }
+  [data-testid="stSidebar"] .stRadio label {
+    font-size: 14px !important;
+    padding: 6px 0 !important;
+  }
+  [data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.15) !important; }
+
+  /* ── Headings ── */
+  h1 { font-size: 38.15px !important; font-weight: 700 !important; color: #1A365D !important; }
+  h2 { font-size: 30.52px !important; font-weight: 600 !important; color: #1A365D !important; }
+  h3 { font-size: 24.41px !important; font-weight: 600 !important; color: #1A365D !important; }
+  h4 { font-size: 20px   !important; font-weight: 600 !important; color: #1A365D !important; }
+
+  /* ── Metric cards ── */
+  [data-testid="metric-container"] {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  [data-testid="metric-container"] label {
+    font-size: 12.80px !important;
+    color: #A0AEC0 !important;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  [data-testid="metric-container"] [data-testid="stMetricValue"] {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #1A202C !important;
+  }
+
+  /* ── Buttons — Teal CTA ── */
+  .stButton > button {
+    background: #319795 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    transition: background .2s, box-shadow .2s;
+  }
+  .stButton > button:hover {
+    background: #4FD1C5 !important;
+    color: #1A365D !important;
+    box-shadow: 0 0 0 3px rgba(79,209,197,0.25) !important;
+  }
+  .stButton > button:focus {
+    outline: 2px solid #4FD1C5 !important;
+    outline-offset: 2px !important;
+  }
+
+  /* ── Download button ── */
+  .stDownloadButton > button {
+    background: #1A365D !important;
+    color: white !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+  }
+  .stDownloadButton > button:hover { background: #319795 !important; }
+
+  /* ── Inputs ── */
+  .stTextInput input, .stNumberInput input,
+  [data-testid="stDateInput"] input {
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    background: #FFFFFF !important;
+    padding: 8px 12px !important;
+  }
+  .stTextInput input:focus, .stNumberInput input:focus {
+    border-color: #319795 !important;
+    box-shadow: 0 0 0 3px rgba(79,209,197,0.20) !important;
+  }
+
+  /* ── Select ── */
+  [data-testid="stSelectbox"] > div > div {
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    background: #FFFFFF !important;
+    font-size: 14px !important;
+  }
+
+  /* ── Expander ── */
+  .streamlit-expanderHeader {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+  }
+
+  /* ── Tabs ── */
+  .stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+    border-bottom: 2px solid #E2E8F0;
+  }
+  .stTabs [data-baseweb="tab"] {
+    border-radius: 8px 8px 0 0 !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    color: #A0AEC0 !important;
+    padding: 8px 16px !important;
+  }
+  .stTabs [aria-selected="true"] {
+    background: #EBF8FF !important;
+    color: #1A365D !important;
+    border-bottom: 2px solid #319795 !important;
+  }
+
+  /* ── Form ── */
+  [data-testid="stForm"] {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 24px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  /* ── Dataframe ── */
+  .stDataFrame {
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 10px !important;
+    overflow: hidden;
+  }
+  .stDataFrame td {
+    font-size: 14px !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+  }
+  .stDataFrame th {
+    background: #F7FAFC !important;
+    font-size: 12.80px !important;
+    color: #A0AEC0 !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Alert / info ── */
+  .stAlert { border-radius: 8px !important; font-size: 14px !important; }
+
+  /* ── Divider ── */
+  hr { border-color: #E2E8F0 !important; }
+
+  /* ── Caption ── */
+  small, .caption { font-size: 12.80px !important; color: #A0AEC0 !important; }
+
+  /* ── Progress bar ── */
+  .stProgress > div > div { background: #319795 !important; border-radius: 99px; }
+  .stProgress > div { background: #E2E8F0 !important; border-radius: 99px; }
+
+  /* ── Slider ── */
+  [data-testid="stSlider"] [role="slider"] { background: #319795 !important; }
+
+  /* ── Spacing helpers ── */
+  .block-container { padding-top: 32px !important; padding-bottom: 48px !important; }
+</style>
+""", unsafe_allow_html=True)
+
 # ─── FILES ────────────────────────────────────────────────────────────────────
 DATA_FILE       = "data/transactions.json"
 SALARY_FILE     = "data/salaries.json"
